@@ -8,7 +8,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://mini-query-engine-xxxx.onrender.com",
+			"value": "https://mini-query-engine.onrender.com",
 			"type": "string"
 		}
 	],

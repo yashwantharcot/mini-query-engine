@@ -3,23 +3,23 @@
 A lightweight backend service that simulates a Gen AI Analytics data query system, allowing non-technical teams to ask complex business questions and get instant insights.
 
 ## Live Demo
-The API is now live at: https://mini-query-engine-xxxx.onrender.com
+The API is now live at: https://mini-query-engine.onrender.com
 
 You can test the API using the following curl commands:
 
 ```bash
 # Process a query
-curl -X POST "https://mini-query-engine-xxxx.onrender.com/query" \
+curl -X POST "https://mini-query-engine.onrender.com/query" \
      -H "X-API-Key: secure_api_key_123" \
      -H "Content-Type: application/json" \
      -d '{"natural_language_query": "Find all products with sales above 1000"}'
 
 # Get query explanation
-curl "https://mini-query-engine-xxxx.onrender.com/explain/1" \
+curl "https://mini-query-engine.onrender.com/explain/1" \
      -H "X-API-Key: secure_api_key_123"
 
 # Validate query
-curl "https://mini-query-engine-xxxx.onrender.com/validate/1" \
+curl "https://mini-query-engine.onrender.com/validate/1" \
      -H "X-API-Key: secure_api_key_123"
 ```
 
@@ -35,7 +35,7 @@ curl "https://mini-query-engine-xxxx.onrender.com/validate/1" \
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/YOUR_USERNAME/mini-query-engine.git
+git clone https://github.com/yashwantharcot/mini-query-engine.git
 cd mini-query-engine
 ```
 
