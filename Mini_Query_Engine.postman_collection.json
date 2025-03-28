@@ -5,6 +5,13 @@
 		"description": "Collection for testing the Mini Query Engine API endpoints",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://mini-query-engine-xxxx.onrender.com",
+			"type": "string"
+		}
+	],
 	"item": [
 		{
 			"name": "Process Query",
@@ -27,10 +34,8 @@
 					"raw": "{\n    \"natural_language_query\": \"Find all products with sales above 1000\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8000/query",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
+					"raw": "{{base_url}}/query",
+					"host": ["{{base_url}}"],
 					"path": ["query"]
 				}
 			}
@@ -47,10 +52,8 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/explain/1",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
+					"raw": "{{base_url}}/explain/1",
+					"host": ["{{base_url}}"],
 					"path": ["explain", "1"]
 				}
 			}
@@ -67,10 +70,8 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/validate/1",
-					"protocol": "http",
-					"host": ["localhost"],
-					"port": "8000",
+					"raw": "{{base_url}}/validate/1",
+					"host": ["{{base_url}}"],
 					"path": ["validate", "1"]
 				}
 			}
