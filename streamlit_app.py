@@ -1,8 +1,9 @@
+import os
 import streamlit as st
 import requests
 
-API_URL = "http://localhost:8000"
-API_KEY = "secure_api_key_123"
+API_URL = os.environ.get("API_URL", "https://mini-query-engine-1.onrender.com")
+API_KEY = os.environ.get("API_KEY", "secure_api_key_123")
 
 st.set_page_config(page_title="Mini Query Engine UI", page_icon="🔍")
 

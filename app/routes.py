@@ -1,10 +1,11 @@
+import os
 from fastapi import APIRouter, HTTPException, Depends, Header
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from .database import SessionLocal
 from .models import QueryLog
 
-API_KEY = "secure_api_key_123"
+API_KEY = os.environ.get("API_KEY", "secure_api_key_123")
 class QueryRequest(BaseModel):
     natural_language_query: str
 router = APIRouter()
