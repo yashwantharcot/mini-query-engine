@@ -11,7 +11,11 @@ This file contains screenshots, share-ready text, and quick instructions for sha
 
 (Place screenshot files in the repo or attach them to your portfolio page.)
 
-1. Streamlit UI (live) — screenshot: `screenshot-streamlit-live.png`
+1. Streamlit UI (live) — screenshot: `app/assets/Live.png`
+
+Embed (renders on GitHub):
+
+![Streamlit live screenshot](app/assets/Live.png)
 2. Render service dashboard — screenshot: `screenshot-render-dashboard.png`
 3. API docs page (/docs) — screenshot: `screenshot-api-docs.png`
 

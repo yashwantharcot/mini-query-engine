@@ -4,6 +4,10 @@
 
 Lightweight FastAPI backend + Streamlit UI that simulates a natural-language-to-SQL query pipeline. Submit plain-language queries, store them in a local SQLite log, and get simple explanations and validation responses. Use the links above to open the live UI or call the API directly.
 
+Screenshot (live Streamlit UI):
+
+![Streamlit live screenshot](app/assets/Live.png)
+
 ## Live Backend (deployed)
 
 - Backend API (Render): https://mini-query-engine-1.onrender.com
