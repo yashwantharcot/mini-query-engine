@@ -40,117 +40,104 @@ cd mini-query-engine
 ```
 
 2. Create and activate a virtual environment (optional but recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+# Mini Data Query Simulation Engine
 
-3. Install dependencies:
+Lightweight FastAPI backend and a small Streamlit UI that simulates a natural-language-to-SQL query pipeline. Use it to submit plain-language queries, store them in a local SQLite log, and get simple explanations and validation responses.
+
+## Quick Start
+
+Prerequisites: Python 3.11+ (3.10+ should work), pip installed.
+
+1. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Run the application:
+2. Start the backend API (from project root):
+
 ```bash
-uvicorn app.main:app --reload
+python -m uvicorn app.main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
+The API listens on http://127.0.0.1:8000 by default.
 
-## API Documentation
+3. (Optional) Start the Streamlit UI in a separate terminal:
 
-### Authentication
-All endpoints require an API key to be included in the request header:
-```
-X-API-Key: secure_api_key_123
+```bash
+streamlit run streamlit_app.py
 ```
 
-### Endpoints
+Streamlit will open at http://localhost:8501 by default.
 
-#### 1. Process Natural Language Query
-```http
-POST /query
-Content-Type: application/json
-X-API-Key: secure_api_key_123
+## Authentication
 
-{
-    "natural_language_query": "Find all products with sales above 1000"
-}
-```
+The API uses a simple header API key. The default key is defined in `app/routes.py`:
 
-Response:
+- Key value: `secure_api_key_123`
+- Header: `X-API-Key` (the server also accepts `api-key` for compatibility)
+
+You can change the key in [app/routes.py](app/routes.py#L1-L20).
+
+## Endpoints
+
+- POST /query — submit a natural-language query. JSON body:
+
 ```json
-{
-    "pseudo_sql_query": "SELECT * FROM data WHERE description LIKE '%Find all products with sales above 1000%';"
-}
+{ "natural_language_query": "Find all products with sales above 1000" }
 ```
 
-#### 2. Get Query Explanation
-```http
-GET /explain/{query_id}
-```
+Response example:
 
-Response:
 ```json
-{
-    "explanation": "This query searches for records containing 'Find all products with sales above 1000' in the description field."
-}
+{ "pseudo_sql_query": "SELECT * FROM data WHERE description LIKE '%Find all products with sales above 1000%';" }
 ```
 
-#### 3. Validate Query
-```http
-GET /validate/{query_id}
-```
+- GET /explain/{query_id} — returns the saved explanation for a previously logged query.
+- GET /validate/{query_id} — returns a basic validation message for the saved query.
 
-Response:
-```json
-{
-    "validation": "Query is syntactically correct and ready for execution."
-}
-```
+All endpoints require the API key header.
 
-## Testing with curl
+## Database
 
-1. Process a query:
+This project uses SQLite. The database file `test.db` is created in the project root. Tables are created automatically when the app starts (the SQLAlchemy models live in `app/models.py`).
+
+## Files of interest
+
+- `app/main.py` — application entry point; starts FastAPI and creates DB tables.
+- `app/routes.py` — API endpoints and authentication (change API key here).
+- `app/models.py` — SQLAlchemy models (the `QueryLog` table).
+- `app/database.py` — DB configuration (SQLite URL `sqlite:///./test.db`).
+- `streamlit_app.py` — small Streamlit UI to interact with the API.
+
+## Examples
+
+Submit a query with curl:
+
 ```bash
-curl -X POST "http://localhost:8000/query" \
-     -H "X-API-Key: secure_api_key_123" \
-     -H "Content-Type: application/json" \
-     -d '{"natural_language_query": "Find all products with sales above 1000"}'
+curl -X POST "http://127.0.0.1:8000/query" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: secure_api_key_123" \
+  -d '{"natural_language_query":"Who are you?"}'
 ```
 
-2. Get query explanation:
+Get explanation for query id 1:
+
 ```bash
-curl "http://localhost:8000/explain/1" \
-     -H "X-API-Key: secure_api_key_123"
+curl "http://127.0.0.1:8000/explain/1" -H "X-API-Key: secure_api_key_123"
 ```
 
-3. Validate query:
-```bash
-curl "http://localhost:8000/validate/1" \
-     -H "X-API-Key: secure_api_key_123"
-```
+## Troubleshooting
 
-## Project Structure
+- 422 Unprocessable Entity on POST /query: make sure you send a JSON body with the `natural_language_query` field.
+- `no such table: query_log`: ensure the app started successfully; `app/main.py` runs `Base.metadata.create_all(...)` on startup to create tables.
+- Uvicorn launcher errors on Windows: run `python -m uvicorn app.main:app --reload` if `uvicorn` exe/launcher is misconfigured.
 
-```
-mini-query-engine/
-├── app/
-│   ├── __init__.py
-│   ├── main.py          # FastAPI application entry point
-│   ├── routes.py        # API endpoints
-│   ├── models.py        # Database models
-│   ├── database.py      # Database configuration
-│   └── utils.py         # Utility functions
-├── requirements.txt     # Project dependencies
-└── README.md           # This file
-```
+## Next steps
 
-## Future Improvements
+- Replace the simple pseudo-SQL generator with a real translator or an LLM backend.
+- Add pagination and search for logged queries.
+- Add tests and CI.
 
-1. Implement more sophisticated natural language processing
-2. Add support for different query types (aggregation, filtering, etc.)
-3. Enhance error handling and validation
-4. Add rate limiting and better security measures
-5. Implement query caching
-6. Add more comprehensive testing
+If you want, I can: update the API key storage to use environment variables, add more Streamlit controls, or add simple unit tests — tell me which and I'll implement it.
+

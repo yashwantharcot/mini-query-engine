@@ -1,9 +1,12 @@
 from fastapi import APIRouter, HTTPException, Depends, Header
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from .database import SessionLocal
 from .models import QueryLog
 
 API_KEY = "secure_api_key_123"
+class QueryRequest(BaseModel):
+    natural_language_query: str
 router = APIRouter()
 
 def get_db():
@@ -13,12 +16,15 @@ def get_db():
     finally:
         db.close()
 
-def authenticate(api_key: str = Header(None)):
-    if api_key != API_KEY:
+def authenticate(api_key: str = Header(None, alias="api-key"), x_api_key: str = Header(None, alias="X-API-Key")):
+    # Accept either `api-key` or `X-API-Key` headers for compatibility
+    key = api_key or x_api_key
+    if key != API_KEY:
         raise HTTPException(status_code=401, detail="Unauthorized")
 
 @router.post("/query", dependencies=[Depends(authenticate)])
-def process_query(natural_language_query: str, db: Session = Depends(get_db)):
+def process_query(request: QueryRequest, db: Session = Depends(get_db)):
+    natural_language_query = request.natural_language_query
     pseudo_sql_query = f"SELECT * FROM data WHERE description LIKE '%{natural_language_query}%';"
     explanation = f"This query searches for records containing '{natural_language_query}' in the description field."
 
