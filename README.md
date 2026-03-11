@@ -6,6 +6,8 @@ Lightweight FastAPI backend + Streamlit UI that simulates a natural-language-to-
 
 - Backend API (Render): https://mini-query-engine-1.onrender.com
 
+- Streamlit UI (deployed): https://mini-query-engine-eidxagwkwgaxfyeemnnqf6.streamlit.app
+
 ## Quick Start (local)
 
 1. Install dependencies:
@@ -84,3 +86,35 @@ and set `API_URL` and `API_KEY` in Render's environment variables.
 - Add a short `deploy.md` with screenshots and the final public URLs.
 
 If you want me to deploy the Streamlit app now, say "Deploy Streamlit" and confirm your GitHub repo name (or grant access). Otherwise, follow the Streamlit Cloud steps above and tell me the public URL so I can add it to the README and share instructions with users.
+
+## Share with users
+
+Provide the following URLs and instructions to users so they can try the app immediately:
+
+- Streamlit UI (interactive): https://mini-query-engine-eidxagwkwgaxfyeemnnqf6.streamlit.app
+- Backend API (programmatic): https://mini-query-engine-1.onrender.com
+
+Quick instructions for users:
+
+1. Open the Streamlit UI URL in a browser and enter a natural language query, then click **Submit Query**.
+
+2. Programmatic access (curl example):
+
+```bash
+curl -X POST "https://mini-query-engine-1.onrender.com/query" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: secure_api_key_123" \
+  -d '{"natural_language_query":"Who are you?"}'
+```
+
+3. View saved query explanation:
+
+```bash
+curl "https://mini-query-engine-1.onrender.com/explain/1" -H "X-API-Key: secure_api_key_123"
+```
+
+Notes:
+- The demo API key is `secure_api_key_123`. Replace or rotate the key for production use.
+- The Render free instance may sleep after inactivity; allow ~30–60s for it to wake.
+
+If you'd like, I can also open a small `deploy.md` with one-click links and usage snippets for sharing in your portfolio.
