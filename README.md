@@ -1,6 +1,8 @@
-# Mini Data Query Simulation Engine
+[![Streamlit Live](https://img.shields.io/badge/Streamlit-Online-brightgreen)](https://mini-query-engine-eidxagwkwgaxfyeemnnqf6.streamlit.app) [![API (Render)](https://img.shields.io/badge/API-Render-blue)](https://mini-query-engine-1.onrender.com)
 
-Lightweight FastAPI backend + Streamlit UI that simulates a natural-language-to-SQL query pipeline. Submit plain-language queries, store them in a local SQLite log, and get simple explanations and validation responses.
+# Mini Data Query Simulation Engine — FastAPI + Streamlit demo
+
+Lightweight FastAPI backend + Streamlit UI that simulates a natural-language-to-SQL query pipeline. Submit plain-language queries, store them in a local SQLite log, and get simple explanations and validation responses. Use the links above to open the live UI or call the API directly.
 
 ## Live Backend (deployed)
 
