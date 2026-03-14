@@ -1,31 +1,52 @@
-[![Streamlit Live](https://img.shields.io/badge/Streamlit-Online-brightgreen)](https://mini-query-engine-eidxagwkwgaxfyeemnnqf6.streamlit.app) [![API (Render)](https://img.shields.io/badge/API-Render-blue)](https://mini-query-engine-1.onrender.com)
-
 # Mini Data Query Simulation Engine
 
-Live demo: https://mini-query-engine-eidxagwkwgaxfyeemnnqf6.streamlit.app
+A modern full-stack application that transforms natural language queries into pseudo-SQL simulations. This project features a FastAPI backend and a premium React + Vite frontend.
 
-About
-- Small demo that translates plain-English queries into pseudo-SQL, logs them, and provides simple explanations. Built with FastAPI (backend), SQLite (store), and Streamlit (UI).
+## Architecture
 
-Try it
-- Open the Streamlit demo (link above) and submit a query.
-- Or call the API directly (curl):
+- **Backend**: Python (FastAPI, SQLAlchemy, SQLite)
+- **Frontend**: React (Vite, Vanilla CSS)
 
-```bash
-curl -X POST "https://mini-query-engine-1.onrender.com/query" \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: secure_api_key_123" \
-  -d '{"natural_language_query":"Who are you?"}'
-```
+## Setup and Running
 
-Notes
-- Demo API key: `secure_api_key_123` (rotate for production).
-- Render free instance may sleep after inactivity; expect a short cold start.
+### Prerequisites
+- Python 3.10+
+- Node.js & npm
 
-Tech
-- FastAPI, Streamlit, SQLAlchemy, SQLite
+### Backend Installation
 
-Source
-- https://github.com/yashwantharcot/mini-query-engine
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-For developer or deployment details see `deploy.md` in this repo.
+2. Start the server:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+   The API will be available at `http://localhost:8000`.
+
+### Frontend Installation
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The UI will be available at `http://localhost:5173`.
+
+## Features
+
+- **Query Generation**: Convert natural language to pseudo-SQL.
+- **Query Insights**: Explain and validate existing queries by ID.
+- **Premium UI**: Modern dark-mode interface with responsive design.
+- **Persistence**: Queries are logged in a local SQLite database (`test.db`).
