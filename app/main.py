@@ -26,22 +26,27 @@ app.include_router(router)
 
 # Serve static files from the frontend build
 frontend_dist = os.path.join(os.getcwd(), "frontend", "dist")
+print(f"Checking for frontend at: {frontend_dist}")
 if os.path.exists(frontend_dist):
+    print("Frontend build found, mounting static files.")
     app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="static")
 
     @app.get("/{full_path:path}")
     async def serve_react_app(full_path: str):
-        # Prevent API routes from being intercepted by the catch-all
-        if full_path.startswith("query") or full_path.startswith("explain") or full_path.startswith("validate"):
-            return None # This won't actually happen because routes are registered before this catch-all
-        
         file_path = os.path.join(frontend_dist, full_path)
         if os.path.isfile(file_path):
             return FileResponse(file_path)
         return FileResponse(os.path.join(frontend_dist, "index.html"))
+else:
+    print("Frontend build NOT found. Did the build script run?")
 
 @app.get("/")
 async def read_root():
-    if os.path.exists(os.path.join(frontend_dist, "index.html")):
-        return FileResponse(os.path.join(frontend_dist, "index.html"))
-    return {"message": "Hello, FastAPI!"}
+    index_path = os.path.join(frontend_dist, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return {
+        "message": "Backend is running, but Frontend build was not found.",
+        "path_checked": frontend_dist,
+        "exists": os.path.exists(frontend_dist)
+    }
