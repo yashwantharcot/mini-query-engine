@@ -52,7 +52,4 @@ def validate_query(query_id: int, db: Session = Depends(get_db)):
     if not query_log:
         raise HTTPException(status_code=404, detail="Query not found")
     return {"validation": "Query is syntactically correct and ready for execution."}
-
-@router.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
+
