@@ -2,6 +2,9 @@
 
 A modern full-stack application that transforms natural language queries into pseudo-SQL simulations. This project features a FastAPI backend and a premium React + Vite frontend.
 
+**Live Application**: [https://mini-query-engine-iy0t.onrender.com](https://mini-query-engine-iy0t.onrender.com)
+
+
 ## Architecture
 
 - **Backend**: Python (FastAPI, SQLAlchemy, SQLite)
